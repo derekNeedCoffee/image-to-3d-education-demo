@@ -1,0 +1,42 @@
+import { existsSync, readFileSync } from 'node:fs';
+import path from 'node:path';
+import { ProxyAgent } from 'undici';
+
+loadLocalEnv();
+
+export const API_HOST = process.env.API_HOST || '127.0.0.1';
+export const API_PORT = Number(process.env.API_PORT || 8787);
+export const BODY_LIMIT = 28 * 1024 * 1024;
+export const MODEL_UPLOAD_LIMIT = 180 * 1024 * 1024;
+export const LOCAL_MODEL_DIR = path.resolve(process.env.LOCAL_MODEL_DIR || '.generated-models');
+export const TRIPO_API_KEY = process.env.TRIPO_API_KEY;
+export const TRIPO_API_BASE = process.env.TRIPO_API_BASE || 'https://api.tripo3d.ai/v2/openapi';
+export const TRIPO_MODEL_VERSION = process.env.TRIPO_MODEL_VERSION || 'v3.0-20250812';
+export const OUTBOUND_PROXY_AGENT = createProxyAgent();
+
+export function hasOutboundProxy() {
+  return Boolean(process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy);
+}
+
+function loadLocalEnv() {
+  if (!existsSync('.env.local')) return;
+
+  const env = readFileSync('.env.local', 'utf8');
+  for (const line of env.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+
+    const index = trimmed.indexOf('=');
+    if (index === -1) continue;
+
+    const key = trimmed.slice(0, index).trim();
+    let value = trimmed.slice(index + 1).trim();
+    value = value.replace(/^["']|["']$/g, '');
+    if (!process.env[key]) process.env[key] = value;
+  }
+}
+
+function createProxyAgent() {
+  const proxy = process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
+  return proxy ? new ProxyAgent(proxy) : null;
+}
