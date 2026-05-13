@@ -1,7 +1,5 @@
-node_modules
-dist
-.env.local
 .generated-models
+node_modules
+.env.local
 *.log
 .DS_Store
-.vercel
