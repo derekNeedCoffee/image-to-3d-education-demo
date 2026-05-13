@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 
 const MODEL_API_BASE = import.meta.env.VITE_MODEL_API_BASE || 'http://127.0.0.1:8787';
-const STATIC_MODEL_BASE = import.meta.env.VITE_STATIC_MODEL_BASE || 'https://raw.githubusercontent.com/derekNeedCoffee/image-to-3d-education-demo/main/.generated-models';
+const STATIC_MODEL_BASE = import.meta.env.VITE_STATIC_MODEL_BASE || '/models';
 const staticModelUrl = (taskId) => `${STATIC_MODEL_BASE}/${taskId}.glb`;
 const GPT_REFERENCE_URL = '/assets/panda-tripo-reference.png';
 const GPT_REFERENCE_NAME = 'panda-tripo-reference.png';
