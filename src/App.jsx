@@ -6,9 +6,11 @@ import * as THREE from 'three';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 
 const MODEL_API_BASE = import.meta.env.VITE_MODEL_API_BASE || 'http://127.0.0.1:8787';
+const STATIC_MODEL_BASE = import.meta.env.VITE_STATIC_MODEL_BASE || 'https://raw.githubusercontent.com/derekNeedCoffee/image-to-3d-education-demo/main/.generated-models';
+const staticModelUrl = (taskId) => `${STATIC_MODEL_BASE}/${taskId}.glb`;
 const GPT_REFERENCE_URL = '/assets/panda-tripo-reference.png';
 const GPT_REFERENCE_NAME = 'panda-tripo-reference.png';
-const CURATED_MODEL_URL = MODEL_API_BASE + '/api/3d/local-model/6aad369f-a18e-4179-9ab8-d5c2d6a89918.glb';
+const CURATED_MODEL_URL = staticModelUrl('6aad369f-a18e-4179-9ab8-d5c2d6a89918');
 const CURATED_TASK_ID = '6aad369f-a18e-4179-9ab8-d5c2d6a89918';
 
 const animals = [
@@ -28,7 +30,7 @@ const animals = [
     facts: ['大熊猫属于熊科，不是浣熊。', '竹食习性需要大面积健康竹林支撑。', '旗舰物种保护会连带保护同域的羚牛、小熊猫和大量鸟类。'],
   },
   {
-    id: 'GOLD-31', name: '川金丝猴', latin: 'Rhinopithecus roxellana', habitat: '秦岭与川西山地', rarity: '中国特有灵长类', type: 'animal', modelUrl: MODEL_API_BASE + '/api/3d/local-model/3f4708f3-51d4-4046-b827-0b3b012c8047.glb', referenceUrl: '/assets/animal-gold-reference.png', referenceName: 'animal-gold-reference.png', taskId: '3f4708f3-51d4-4046-b827-0b3b012c8047',
+    id: 'GOLD-31', name: '川金丝猴', latin: 'Rhinopithecus roxellana', habitat: '秦岭与川西山地', rarity: '中国特有灵长类', type: 'animal', modelUrl: staticModelUrl('3f4708f3-51d4-4046-b827-0b3b012c8047'), referenceUrl: '/assets/animal-gold-reference.png', referenceName: 'animal-gold-reference.png', taskId: '3f4708f3-51d4-4046-b827-0b3b012c8047',
     palette: ['#e7b35f', '#f4e8d1', '#587a92', '#252b30'], stats: { identity: 86, habitat: 78, risk: 75, recovery: 61 },
     conservation: '濒危 EN', population: '约 8,000-15,000 只', diet: '嫩叶、芽、果实、种子和地衣',
     ecosystemRole: '在高山森林中传播种子，也反映阔叶林与针阔混交林的完整性。',
@@ -42,7 +44,7 @@ const animals = [
     facts: ['金色毛发是适应寒冷高山环境的保温层。', '它们有复杂社会结构，常以小家庭单元组成大群。', '保护金丝猴等于保护高山森林的垂直生态带。'],
   },
   {
-    id: 'IBIS-22', name: '朱鹮', latin: 'Nipponia nippon', habitat: '陕西汉中湿地', rarity: '东方宝石', type: 'animal', modelUrl: MODEL_API_BASE + '/api/3d/local-model/754f460f-1fd0-4ff4-baba-fb8e6c8a40ce.glb', referenceUrl: '/assets/animal-ibis-reference.png', referenceName: 'animal-ibis-reference.png', taskId: '754f460f-1fd0-4ff4-baba-fb8e6c8a40ce',
+    id: 'IBIS-22', name: '朱鹮', latin: 'Nipponia nippon', habitat: '陕西汉中湿地', rarity: '东方宝石', type: 'animal', modelUrl: staticModelUrl('754f460f-1fd0-4ff4-baba-fb8e6c8a40ce'), referenceUrl: '/assets/animal-ibis-reference.png', referenceName: 'animal-ibis-reference.png', taskId: '754f460f-1fd0-4ff4-baba-fb8e6c8a40ce',
     palette: ['#fff6ee', '#e46d5d', '#22282c', '#84a7ad'], stats: { identity: 74, habitat: 82, risk: 72, recovery: 96 },
     conservation: '濒危 EN', population: '从 7 只恢复到数千只', diet: '泥鳅、小鱼、昆虫和水生无脊椎动物',
     ecosystemRole: '湿地水田系统的指示物种，说明浅水觅食地和低干扰繁殖地仍然存在。',
@@ -56,7 +58,7 @@ const animals = [
     facts: ['朱鹮曾一度被认为野外灭绝。', '1981 年在陕西洋县重新发现 7 只野生个体。', '它的恢复是中国濒危鸟类保护的代表案例。'],
   },
   {
-    id: 'GATOR-09', name: '扬子鳄', latin: 'Alligator sinensis', habitat: '长江下游湿地', rarity: '中国特有鳄类', type: 'animal', modelUrl: MODEL_API_BASE + '/api/3d/local-model/9ccd902e-0ce5-40e5-a396-9b16726e9ff1.glb', referenceUrl: '/assets/animal-gator-reference.png', referenceName: 'animal-gator-reference.png', taskId: '9ccd902e-0ce5-40e5-a396-9b16726e9ff1',
+    id: 'GATOR-09', name: '扬子鳄', latin: 'Alligator sinensis', habitat: '长江下游湿地', rarity: '中国特有鳄类', type: 'animal', modelUrl: staticModelUrl('9ccd902e-0ce5-40e5-a396-9b16726e9ff1'), referenceUrl: '/assets/animal-gator-reference.png', referenceName: 'animal-gator-reference.png', taskId: '9ccd902e-0ce5-40e5-a396-9b16726e9ff1',
     palette: ['#425242', '#899066', '#1d211a', '#d4bd87'], stats: { identity: 58, habitat: 69, risk: 95, recovery: 55 },
     conservation: '极危 CR', population: '野外成熟个体仍很少', diet: '鱼、螺、甲壳类、小型脊椎动物',
     ecosystemRole: '湿地顶级小型捕食者，洞穴行为能改变微地形并为其他物种提供庇护。',
@@ -73,7 +75,7 @@ const animals = [
 
 const cars = [
   {
-    id: 'HYPER-01', name: '碳纤维赛道超跑', latin: 'Carbon Hypercar', rarity: '空气动力学旗舰', habitat: '低趴中置平台', type: 'car', variant: 'hyper', badge: 'AERO', modelUrl: MODEL_API_BASE + '/api/3d/local-model/d96d2513-af96-45c8-9d02-ce01a9bfeb64.glb', referenceUrl: '/assets/car-hyper-reference.png', referenceName: 'car-hyper-reference.png', taskId: 'd96d2513-af96-45c8-9d02-ce01a9bfeb64',
+    id: 'HYPER-01', name: '碳纤维赛道超跑', latin: 'Carbon Hypercar', rarity: '空气动力学旗舰', habitat: '低趴中置平台', type: 'car', variant: 'hyper', badge: 'AERO', modelUrl: staticModelUrl('d96d2513-af96-45c8-9d02-ce01a9bfeb64'), referenceUrl: '/assets/car-hyper-reference.png', referenceName: 'car-hyper-reference.png', taskId: 'd96d2513-af96-45c8-9d02-ce01a9bfeb64',
     palette: ['#f5f7f6', '#111317', '#ff4d2e', '#0aa6b5'], stats: { aero: 96, power: 92, chassis: 88, control: 84 },
     platform: '碳纤维单体壳 + 中置动力', performance: '高速下压力、轻量化、赛道稳定性',
     ecosystemRole: '这类车代表现代超跑的核心方向：车身不是只追求好看，而是把空气引导成抓地力。',
@@ -87,7 +89,7 @@ const cars = [
     facts: ['下压力越大，高速弯越稳，但直线极速会被阻力拖慢。', '中置布局让车更灵敏，也更考验驾驶者。', '碳纤维贵，是因为材料和制造工艺都很复杂。'],
   },
   {
-    id: 'EV-GT-88', name: '高性能电动 GT', latin: 'Electric Grand Tourer', rarity: '电驱时代代表', habitat: '滑板电池平台', type: 'car', variant: 'ev', badge: 'EV', modelUrl: MODEL_API_BASE + '/api/3d/local-model/132ce993-ec63-4ec4-a5e5-c6be29e7c0bb.glb', referenceUrl: '/assets/car-evgt-reference.png', referenceName: 'car-evgt-reference.png', taskId: '132ce993-ec63-4ec4-a5e5-c6be29e7c0bb',
+    id: 'EV-GT-88', name: '高性能电动 GT', latin: 'Electric Grand Tourer', rarity: '电驱时代代表', habitat: '滑板电池平台', type: 'car', variant: 'ev', badge: 'EV', modelUrl: staticModelUrl('132ce993-ec63-4ec4-a5e5-c6be29e7c0bb'), referenceUrl: '/assets/car-evgt-reference.png', referenceName: 'car-evgt-reference.png', taskId: '132ce993-ec63-4ec4-a5e5-c6be29e7c0bb',
     palette: ['#dfe8ed', '#111820', '#6de3ff', '#7f5af0'], stats: { aero: 82, power: 88, chassis: 91, control: 89 },
     platform: '低重心电池包 + 双电机四驱', performance: '瞬时扭矩、安静巡航、能量管理',
     ecosystemRole: '电动 GT 的帅不是声浪，而是低重心、干净线条和电机瞬间响应带来的未来感。',
@@ -101,7 +103,7 @@ const cars = [
     facts: ['电动车快，不只是马力大，核心是电机扭矩响应极快。', '电池越低，车身侧倾通常越容易控制。', '热管理不好，性能会很快降额。'],
   },
   {
-    id: 'RALLY-76', name: '经典拉力战车', latin: 'Group B Inspired Rally', rarity: '机械暴力美学', habitat: '短轴距四驱底盘', type: 'car', variant: 'rally', badge: 'AWD', modelUrl: MODEL_API_BASE + '/api/3d/local-model/28cea82d-c1b5-45fd-b6b1-5c705ba35260.glb', referenceUrl: '/assets/car-rally-reference.png', referenceName: 'car-rally-reference.png', taskId: '28cea82d-c1b5-45fd-b6b1-5c705ba35260',
+    id: 'RALLY-76', name: '经典拉力战车', latin: 'Group B Inspired Rally', rarity: '机械暴力美学', habitat: '短轴距四驱底盘', type: 'car', variant: 'rally', badge: 'AWD', modelUrl: staticModelUrl('28cea82d-c1b5-45fd-b6b1-5c705ba35260'), referenceUrl: '/assets/car-rally-reference.png', referenceName: 'car-rally-reference.png', taskId: '28cea82d-c1b5-45fd-b6b1-5c705ba35260',
     palette: ['#f4f0e8', '#101417', '#ffb000', '#d72638'], stats: { aero: 68, power: 86, chassis: 95, control: 93 },
     platform: '涡轮增压 + 机械四驱', performance: '烂路抓地、悬挂行程、漂移可控性',
     ecosystemRole: '拉力车的帅来自功能暴露：宽体、灯组、进气口和高行程悬挂都是为了在非铺装路面活下来。',
@@ -115,7 +117,7 @@ const cars = [
     facts: ['拉力车的宽体不是装饰，是给悬挂和轮胎留空间。', '短轴距更灵活，但高速稳定更难调。', '四驱系统让车可以用油门帮助转向。'],
   },
   {
-    id: 'ROVER-X4', name: '远征越野车', latin: 'Expedition 4x4', rarity: '硬核工具美学', habitat: '非承载式车架', type: 'car', variant: 'rover', badge: '4X4', modelUrl: MODEL_API_BASE + '/api/3d/local-model/9b6f40fb-8551-4d21-af42-0942f83fa4db.glb', referenceUrl: '/assets/car-rover-reference.png', referenceName: 'car-rover-reference.png', taskId: '9b6f40fb-8551-4d21-af42-0942f83fa4db',
+    id: 'ROVER-X4', name: '远征越野车', latin: 'Expedition 4x4', rarity: '硬核工具美学', habitat: '非承载式车架', type: 'car', variant: 'rover', badge: '4X4', modelUrl: staticModelUrl('9b6f40fb-8551-4d21-af42-0942f83fa4db'), referenceUrl: '/assets/car-rover-reference.png', referenceName: 'car-rover-reference.png', taskId: '9b6f40fb-8551-4d21-af42-0942f83fa4db',
     palette: ['#6f7a5c', '#171a16', '#d8b46a', '#f5f1e6'], stats: { aero: 42, power: 78, chassis: 94, control: 82 },
     platform: '梯形车架 + 低速四驱', performance: '通过性、可靠性、载荷能力',
     ecosystemRole: '越野车的代表性不在极速，而在离开铺装路之后仍能通过、修复、装载和保护乘员。',
@@ -132,7 +134,7 @@ const cars = [
 
 const cases = [
   {
-    id: 'INSECT-03', name: '拟态飞行实验室', latin: 'Mimicry Flight Lab', rarity: '自然教育场景', habitat: '昆虫翅膀与飞行', type: 'case', variant: 'insect', badge: 'BIO', modelUrl: MODEL_API_BASE + '/api/3d/local-model/9db67071-26be-4bba-b935-a77587462d37.glb', referenceUrl: '/assets/case-insect-reference.png', referenceName: 'case-insect-reference.png', taskId: '9db67071-26be-4bba-b935-a77587462d37',
+    id: 'INSECT-03', name: '拟态飞行实验室', latin: 'Mimicry Flight Lab', rarity: '自然教育场景', habitat: '昆虫翅膀与飞行', type: 'case', variant: 'insect', badge: 'BIO', modelUrl: staticModelUrl('9db67071-26be-4bba-b935-a77587462d37'), referenceUrl: '/assets/case-insect-reference.png', referenceName: 'case-insect-reference.png', taskId: '9db67071-26be-4bba-b935-a77587462d37',
     palette: ['#d7ead2', '#172026', '#f2b84b', '#4e8d6f'], stats: { visual: 92, learning: 91, interaction: 86, demo: 88 },
     audience: '儿童自然课、昆虫科普、博物馆导览', expansion: '从蝴蝶扩展到竹节虫、螳螂、甲虫和拟态生态链',
     ecosystemRole: '昆虫翅膀非常适合把平面图变成 3D 教育模型：纹理、翅脉、颜色和飞行姿态都能被拆成可点击知识点。',
@@ -146,7 +148,7 @@ const cases = [
     facts: ['适合讲拟态、结构色和飞行力学。', '3D 热点能把昆虫身体分成可探索的知识节点。', '可以扩展成一套儿童昆虫图鉴或自然博物馆展项。'],
   },
   {
-    id: 'BRONZE-01', name: '青铜礼器数字展柜', latin: 'Bronze Ritual Vessel', rarity: '文化教育场景', habitat: '青铜器纹样与礼制', type: 'case', variant: 'bronze', badge: 'MUSEUM', modelUrl: MODEL_API_BASE + '/api/3d/local-model/d2d0a491-07c7-434a-9ac4-8f824484a380.glb', referenceUrl: '/assets/case-bronze-reference.png', referenceName: 'case-bronze-reference.png', taskId: 'd2d0a491-07c7-434a-9ac4-8f824484a380',
+    id: 'BRONZE-01', name: '青铜礼器数字展柜', latin: 'Bronze Ritual Vessel', rarity: '文化教育场景', habitat: '青铜器纹样与礼制', type: 'case', variant: 'bronze', badge: 'MUSEUM', modelUrl: staticModelUrl('d2d0a491-07c7-434a-9ac4-8f824484a380'), referenceUrl: '/assets/case-bronze-reference.png', referenceName: 'case-bronze-reference.png', taskId: 'd2d0a491-07c7-434a-9ac4-8f824484a380',
     palette: ['#8c7a48', '#1f241d', '#c9a14b', '#2f6f67'], stats: { visual: 84, learning: 95, interaction: 82, demo: 91 },
     audience: '博物馆导览、历史课、文物数字展览', expansion: '从青铜鼎扩展到尊、爵、簋、兵马俑和古建筑构件',
     ecosystemRole: '文物照片常常难以说明器型、纹样和工艺。3D 展柜可以让观众旋转文物，并点击纹样、铭文和结构理解背后的文化语境。',
@@ -160,7 +162,7 @@ const cases = [
     facts: ['适合把文物照片升级成可互动数字展柜。', '观众可以从形状、纹样、铭文和工艺四条线理解文物。', '很适合博物馆、研学和历史课的轻量化互动内容。'],
   },
   {
-    id: 'AERO-01', name: '超跑空气动力学教室', latin: 'Aero Downforce Studio', rarity: '工程科普场景', habitat: '尾翼、底板和气流', type: 'case', variant: 'aero', badge: 'AERO', modelUrl: MODEL_API_BASE + '/api/3d/local-model/358ffb71-4995-49d3-a08e-7ee8ac29dd86.glb', referenceUrl: '/assets/case-aero-reference.png', referenceName: 'case-aero-reference.png', taskId: '358ffb71-4995-49d3-a08e-7ee8ac29dd86',
+    id: 'AERO-01', name: '超跑空气动力学教室', latin: 'Aero Downforce Studio', rarity: '工程科普场景', habitat: '尾翼、底板和气流', type: 'case', variant: 'aero', badge: 'AERO', modelUrl: staticModelUrl('358ffb71-4995-49d3-a08e-7ee8ac29dd86'), referenceUrl: '/assets/case-aero-reference.png', referenceName: 'case-aero-reference.png', taskId: '358ffb71-4995-49d3-a08e-7ee8ac29dd86',
     palette: ['#edf2f1', '#111317', '#e04833', '#247f8f'], stats: { visual: 89, learning: 87, interaction: 92, demo: 94 },
     audience: '汽车科普、工程教育、性能车产品展示', expansion: '从超跑扩展到 F1、无人机、飞机机翼和风洞实验',
     ecosystemRole: '空气动力学很抽象，但车身、前唇、底板、扩散器和尾翼都可以在 3D 模型上被直接点出来。',
